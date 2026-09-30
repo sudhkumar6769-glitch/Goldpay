@@ -1,3 +1,613 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GoldPay</title><style>
-*{box-sizing:border-box}body{margin:0;background:#08090c;color:#f5f5f5;font-family:system-ui,Arial}nav{padding:18px 7%;display:flex;justify-content:space-between;border-bottom:1px solid #242832}.logo{font-size:25px;font-weight:900}.logo span{color:#e0b24c}main{max-width:1050px;margin:auto;padding:80px 22px}.hero{max-width:720px}.badge{color:#e0b24c;border:1px solid #5c481f;padding:7px 12px;border-radius:30px;font-size:12px}h1{font-size:clamp(45px,8vw,78px);line-height:1;margin:22px 0}p{color:#a6acb7;line-height:1.7}.btn{display:inline-block;padding:13px 18px;border-radius:10px;text-decoration:none;font-weight:800;margin:8px 8px 0 0}.gold{background:#dfb552;color:#111}.dark{border:1px solid #333;color:#fff}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:55px}.card{background:#11141a;border:1px solid #252a33;border-radius:18px;padding:24px}.card h3{margin-top:0;color:#e0b24c}@media(max-width:750px){.cards{grid-template-columns:1fr}}
-</style></head><body><nav><div class="logo">Gold<span>Pay</span></div><div>Secure platform</div></nav><main><section class="hero"><span class="badge">PRODUCTION-READY FOUNDATION</span><h1>Invest with clarity.</h1><p>GoldPay provides a secure foundation for user accounts, KYC status, transaction records and an admin workflow. Investment products and returns must be supplied by the appropriately regulated entity.</p><a class="btn gold" href="#features">Explore</a><a class="btn dark" href="/api/me">API status</a></section><section id="features" class="cards"><div class="card"><h3>Accounts</h3><p>Hashed passwords, JWT authentication and role-based access.</p></div><div class="card"><h3>KYC workflow</h3><p>User KYC status with an admin verification endpoint.</p></div><div class="card"><h3>Transactions</h3><p>Deposit records are pending until an approved payment provider webhook confirms them.</p></div></section></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoldPay - Investment Demo</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#080808;
+  color:#fff;
+}
+header{
+  background:#111;
+  border-bottom:1px solid #333;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.logo{color:#e5bd5a;font-size:25px;font-weight:bold}
+.container{max-width:1100px;margin:auto;padding:25px 18px}
+button{
+  border:0;
+  padding:12px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.gold{background:#e5bd5a;color:#111}
+.dark{background:#222;color:white;border:1px solid #444}
+.danger{background:#8b2222;color:white}
+.hero{
+  padding:60px 10px;
+  text-align:center;
+}
+.hero h1{
+  font-size:50px;
+  margin:10px 0;
+  color:#f0d078;
+}
+.hero p{color:#aaa;line-height:1.6}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+.card{
+  background:#131313;
+  border:1px solid #292929;
+  border-radius:15px;
+  padding:20px;
+}
+.card h3{color:#e5bd5a}
+.balance{
+  font-size:30px;
+  color:#f0d078;
+  font-weight:bold;
+}
+input,select{
+  width:100%;
+  padding:12px;
+  margin:7px 0 14px;
+  background:#090909;
+  border:1px solid #444;
+  color:white;
+  border-radius:8px;
+}
+label{color:#aaa;font-size:14px}
+section{margin-top:25px}
+.hidden{display:none}
+nav button{margin:3px}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+th,td{
+  padding:11px;
+  border-bottom:1px solid #333;
+  text-align:left;
+  font-size:14px;
+}
+.status{
+  color:#e5bd5a;
+}
+.notice{
+  background:#19150b;
+  border:1px solid #4c3b15;
+  padding:14px;
+  border-radius:10px;
+  color:#d9c783;
+  margin:15px 0;
+}
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000c;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:20;
+}
+.modalbox{
+  background:#151515;
+  padding:25px;
+  width:90%;
+  max-width:420px;
+  border-radius:15px;
+  border:1px solid #444;
+}
+footer{
+  margin-top:50px;
+  padding:25px;
+  text-align:center;
+  color:#777;
+  border-top:1px solid #222;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">GoldPay</div>
+  <div id="headerButtons">
+    <button class="gold" onclick="openLogin()">Login</button>
+  </div>
+</header>
+
+<div id="home">
+
+<section class="hero">
+  <div class="status">● SECURE DEMO PLATFORM</div>
+  <h1>Invest with clarity.</h1>
+  <p>
+    GoldPay is a demonstration investment dashboard with
+    accounts, portfolio, transactions and KYC workflow.
+  </p>
+
+  <button class="gold" onclick="openSignup()">Create Account</button>
+  <button class="dark" onclick="openLogin()">Login</button>
+</section>
+
+<section class="container">
+  <div class="cards">
+
+    <div class="card">
+      <h3>Accounts</h3>
+      <p>Manage your demo account and profile.</p>
+    </div>
+
+    <div class="card">
+      <h3>Investment Plans</h3>
+      <p>Choose from available demonstration plans.</p>
+    </div>
+
+    <div class="card">
+      <h3>Transactions</h3>
+      <p>Track deposits, withdrawals and investments.</p>
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="container hidden">
+
+<nav>
+  <button class="gold" onclick="showPage('overview')">Dashboard</button>
+  <button class="dark" onclick="showPage('plans')">Plans</button>
+  <button class="dark" onclick="showPage('transactions')">Transactions</button>
+  <button class="dark" onclick="showPage('profile')">Profile</button>
+  <button class="danger" onclick="logout()">Logout</button>
+</nav>
+
+
+<!-- OVERVIEW -->
+
+<section id="overview">
+
+<h2>Welcome, <span id="userName"></span> 👋</h2>
+
+<div class="cards">
+
+<div class="card">
+<p>Available Balance</p>
+<div class="balance" id="balance">₹0</div>
+</div>
+
+<div class="card">
+<p>Total Investment</p>
+<div class="balance" id="investment">₹0</div>
+</div>
+
+<div class="card">
+<p>Portfolio Value</p>
+<div class="balance" id="portfolio">₹0</div>
+</div>
+
+</div>
+
+<div class="notice">
+<strong>Demo Mode:</strong>
+This website does not process real money. Deposits and withdrawals
+are simulated in your browser.
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Deposit</h3>
+<input type="number" id="depositAmount" placeholder="Amount">
+<button class="gold" onclick="deposit()">Deposit</button>
+</div>
+
+<div class="card">
+<h3>Withdraw</h3>
+<input type="number" id="withdrawAmount" placeholder="Amount">
+<button class="gold" onclick="withdraw()">Withdraw</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PLANS -->
+
+<section id="plans" class="hidden">
+
+<h2>Investment Plans</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Starter</h3>
+<div class="balance">₹500</div>
+<p>Demo investment plan</p>
+<button class="gold" onclick="invest(500,'Starter')">Invest</button>
+</div>
+
+<div class="card">
+<h3>Silver</h3>
+<div class="balance">₹2,000</div>
+<p>Demo investment plan</p>
+<button class="gold" onclick="invest(2000,'Silver')">Invest</button>
+</div>
+
+<div class="card">
+<h3>Gold</h3>
+<div class="balance">₹5,000</div>
+<p>Demo investment plan</p>
+<button class="gold" onclick="invest(5000,'Gold')">Invest</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- TRANSACTIONS -->
+
+<section id="transactions" class="hidden">
+
+<h2>Transaction History</h2>
+
+<div class="card">
+
+<table>
+
+<thead>
+<tr>
+<th>Type</th>
+<th>Amount</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="transactionList"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="hidden">
+
+<h2>Profile & KYC</h2>
+
+<div class="card">
+
+<label>Name</label>
+<input id="profileName">
+
+<label>Email</label>
+<input id="profileEmail">
+
+<label>KYC Status</label>
+
+<select id="kyc">
+<option>Pending</option>
+<option>Submitted</option>
+<option>Verified</option>
+</select>
+
+<button class="gold" onclick="saveProfile()">Save Profile</button>
+
+</div>
+
+</section>
+
+<footer>
+GoldPay © 2026 — Demonstration website only.
+</footer>
+
+</div>
+
+
+<!-- LOGIN MODAL -->
+
+<div id="loginModal" class="modal hidden">
+
+<div class="modalbox">
+
+<h2>Login</h2>
+
+<label>Email</label>
+<input id="loginEmail" type="email" placeholder="Email">
+
+<label>Password</label>
+<input id="loginPassword" type="password" placeholder="Password">
+
+<button class="gold" onclick="login()">Login</button>
+<button class="dark" onclick="closeModals()">Cancel</button>
+
+<p class="muted">
+Demo login: create an account first.
+</p>
+
+</div>
+
+</div>
+
+
+<!-- SIGNUP MODAL -->
+
+<div id="signupModal" class="modal hidden">
+
+<div class="modalbox">
+
+<h2>Create Account</h2>
+
+<label>Name</label>
+<input id="signupName" placeholder="Your name">
+
+<label>Email</label>
+<input id="signupEmail" type="email" placeholder="Email">
+
+<label>Password</label>
+<input id="signupPassword" type="password" placeholder="Password">
+
+<button class="gold" onclick="signup()">Create Account</button>
+<button class="dark" onclick="closeModals()">Cancel</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+let user = JSON.parse(localStorage.getItem("goldpayUser")) || null;
+
+let transactions =
+JSON.parse(localStorage.getItem("goldpayTransactions")) || [];
+
+function save(){
+  localStorage.setItem("goldpayUser",JSON.stringify(user));
+  localStorage.setItem("goldpayTransactions",JSON.stringify(transactions));
+}
+
+function openLogin(){
+  document.getElementById("loginModal").classList.remove("hidden");
+}
+
+function openSignup(){
+  document.getElementById("signupModal").classList.remove("hidden");
+}
+
+function closeModals(){
+  document.getElementById("loginModal").classList.add("hidden");
+  document.getElementById("signupModal").classList.add("hidden");
+}
+
+function signup(){
+
+  let name=document.getElementById("signupName").value;
+  let email=document.getElementById("signupEmail").value;
+  let password=document.getElementById("signupPassword").value;
+
+  if(!name || !email || !password){
+    alert("Please fill all fields");
+    return;
+  }
+
+  user={
+    name:name,
+    email:email,
+    password:password,
+    balance:0,
+    investment:0,
+    kyc:"Pending"
+  };
+
+  transactions=[];
+
+  save();
+  closeModals();
+  showDashboard();
+
+  alert("Account created successfully!");
+}
+
+function login(){
+
+  let email=document.getElementById("loginEmail").value;
+  let password=document.getElementById("loginPassword").value;
+
+  if(!user){
+    alert("Please create an account first.");
+    return;
+  }
+
+  if(email===user.email && password===user.password){
+    closeModals();
+    showDashboard();
+  }else{
+    alert("Incorrect email or password.");
+  }
+}
+
+function showDashboard(){
+
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
+
+  document.getElementById("userName").innerText=user.name;
+
+  updateDashboard();
+
+  showPage("overview");
+}
+
+function updateDashboard(){
+
+  document.getElementById("balance").innerText=
+  "₹"+user.balance.toLocaleString();
+
+  document.getElementById("investment").innerText=
+  "₹"+user.investment.toLocaleString();
+
+  document.getElementById("portfolio").innerText=
+  "₹"+(user.balance+user.investment).toLocaleString();
+
+  document.getElementById("profileName").value=user.name;
+  document.getElementById("profileEmail").value=user.email;
+  document.getElementById("kyc").value=user.kyc;
+
+  renderTransactions();
+}
+
+function deposit(){
+
+  let amount=Number(document.getElementById("depositAmount").value);
+
+  if(amount<=0){
+    alert("Enter a valid amount");
+    return;
+  }
+
+  user.balance+=amount;
+
+  transactions.unshift({
+    type:"Deposit",
+    amount:amount,
+    status:"Demo Completed"
+  });
+
+  save();
+  updateDashboard();
+
+  document.getElementById("depositAmount").value="";
+
+  alert("Demo deposit successful!");
+}
+
+function withdraw(){
+
+  let amount=Number(document.getElementById("withdrawAmount").value);
+
+  if(amount<=0 || amount>user.balance){
+    alert("Insufficient demo balance.");
+    return;
+  }
+
+  user.balance-=amount;
+
+  transactions.unshift({
+    type:"Withdrawal",
+    amount:amount,
+    status:"Demo Completed"
+  });
+
+  save();
+  updateDashboard();
+
+  document.getElementById("withdrawAmount").value="";
+
+  alert("Demo withdrawal successful!");
+}
+
+function invest(amount,plan){
+
+  if(user.balance<amount){
+    alert("Insufficient demo balance. Deposit first.");
+    return;
+  }
+
+  user.balance-=amount;
+  user.investment+=amount;
+
+  transactions.unshift({
+    type:"Investment - "+plan,
+    amount:amount,
+    status:"Demo Active"
+  });
+
+  save();
+  updateDashboard();
+
+  alert(plan+" plan activated in demo mode!");
+}
+
+function renderTransactions(){
+
+  let list=document.getElementById("transactionList");
+
+  if(transactions.length===0){
+    list.innerHTML=
+    "<tr><td colspan='3'>No transactions yet.</td></tr>";
+    return;
+  }
+
+  list.innerHTML=transactions.map(t=>`
+  <tr>
+    <td>${t.type}</td>
+    <td>₹${Number(t.amount).toLocaleString()}</td>
+    <td class="status">${t.status}</td>
+  </tr>
+  `).join("");
+}
+
+function saveProfile(){
+
+  user.name=document.getElementById("profileName").value;
+  user.email=document.getElementById("profileEmail").value;
+  user.kyc=document.getElementById("kyc").value;
+
+  save();
+  updateDashboard();
+
+  alert("Profile saved!");
+}
+
+function showPage(page){
+
+  ["overview","plans","transactions","profile"].forEach(id=>{
+    document.getElementById(id).classList.add("hidden");
+  });
+
+  document.getElementById(page).classList.remove("hidden");
+}
+
+function logout(){
+
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+
+  alert("Logged out.");
+}
+
+if(user){
+  showDashboard();
+}
+
+</script>
+
+</body>
+</html>
