@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoldPay</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f5f6fa;
+  color:#222;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* LOGIN */
+.auth{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:linear-gradient(135deg,#111,#3b2b05);
+}
+
+.auth-box{
+  width:100%;
+  max-width:400px;
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 20px 50px #0008;
+}
+
+.logo{
+  text-align:center;
+  font-size:32px;
+  font-weight:bold;
+  color:#d4a017;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#777;
+  margin-bottom:25px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#d4a017;
+}
+
+.gold-btn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:#d4a017;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.switch{
+  text-align:center;
+  margin-top:18px;
+  color:#777;
+}
+
+.switch span{
+  color:#b8860b;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* APP */
+.app{
+  min-height:100vh;
+}
+
+.topbar{
+  background:#111;
+  color:white;
+  padding:18px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.top-logo{
+  font-size:25px;
+  font-weight:bold;
+  color:#e0ad21;
+}
+
+.logout{
+  border:1px solid #e0ad21;
+  background:transparent;
+  color:#e0ad21;
+  padding:8px 14px;
+  border-radius:8px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:25px 20px 100px;
+}
+
+.welcome{
+  margin-bottom:20px;
+}
+
+.balance{
+  background:linear-gradient(135deg,#151515,#b8860b);
+  color:white;
+  border-radius:20px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.balance small{
+  opacity:.8;
+}
+
+.amount{
+  font-size:35px;
+  margin:10px 0 20px;
+  font-weight:bold;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.action{
+  background:white;
+  border:0;
+  padding:20px 10px;
+  border-radius:15px;
+  box-shadow:0 3px 15px #0001;
+}
+
+.action .icon{
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+.section{
+  background:white;
+  margin-top:25px;
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 3px 15px #0001;
+}
+
+.section h2{
+  margin-bottom:15px;
+}
+
+.transaction{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 0;
+  border-bottom:1px solid #eee;
+}
+
+.transaction:last-child{
+  border-bottom:0;
+}
+
+.tx-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.tx-icon{
+  width:40px;
+  height:40px;
+  background:#fff4d2;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.plus{
+  color:green;
+  font-weight:bold;
+}
+
+.minus{
+  color:red;
+  font-weight:bold;
+}
+
+.profile-row{
+  margin:15px 0;
+}
+
+.profile-row b{
+  display:block;
+  margin-bottom:5px;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  display:flex;
+  justify-content:space-around;
+  padding:12px 5px;
+  box-shadow:0 -3px 15px #0002;
+}
+
+.bottom-nav button{
+  background:none;
+  border:0;
+  font-size:12px;
+}
+
+.bottom-nav div{
+  font-size:21px;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.modal-box{
+  width:100%;
+  max-width:400px;
+  background:white;
+  padding:25px;
+  border-radius:18px;
+}
+
+.close{
+  float:right;
+  border:0;
+  background:none;
+  font-size:25px;
+}
+
+@media(max-width:600px){
+  .actions{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .container{
+    padding-left:15px;
+    padding-right:15px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN / REGISTER -->
+<div id="auth" class="auth">
+
+  <div class="auth-box">
+
+    <div class="logo">💰 GoldPay</div>
+    <div class="subtitle">Simple & Secure Wallet</div>
+
+    <div id="loginForm">
+
+      <input id="loginEmail" type="text" placeholder="Username / Email">
+      <input id="loginPassword" type="password" placeholder="Password">
+
+      <button class="gold-btn" onclick="login()">Login</button>
+
+      <div class="switch">
+        New user?
+        <span onclick="showRegister()">Create Account</span>
+      </div>
+
+    </div>
+
+    <div id="registerForm" class="hidden">
+
+      <input id="regName" type="text" placeholder="Full Name">
+      <input id="regEmail" type="text" placeholder="Username / Email">
+      <input id="regPassword" type="password" placeholder="Create Password">
+
+      <button class="gold-btn" onclick="register()">Register</button>
+
+      <div class="switch">
+        Already have an account?
+        <span onclick="showLogin()">Login</span>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- MAIN APP -->
+<div id="app" class="app hidden">
+
+  <div class="topbar">
+    <div class="top-logo">💰 GoldPay</div>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="container">
+
+    <div class="welcome">
+      <h2>Hello, <span id="userName">User</span> 👋</h2>
+      <p>Welcome to your GoldPay wallet.</p>
+    </div>
+
+    <!-- BALANCE -->
+    <div class="balance">
+      <small>Available Balance</small>
+      <div class="amount">₹<span id="balance">5,000.00</span></div>
+      <small>GoldPay Wallet</small>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+
+      <button class="action" onclick="openModal('Send Money')">
+        <div class="icon">💸</div>
+        Send
+      </button>
+
+      <button class="action" onclick="openModal('Receive Money')">
+        <div class="icon">📥</div>
+        Receive
+      </button>
+
+      <button class="action" onclick="openModal('Recharge')">
+        <div class="icon">📱</div>
+        Recharge
+      </button>
+
+      <button class="action" onclick="openModal('Add Money')">
+        <div class="icon">➕</div>
+        Add Money
+      </button>
+
+    </div>
+
+
+    <!-- TRANSACTION HISTORY -->
+    <div class="section">
+
+      <h2>Transaction History</h2>
+
+      <div id="transactions">
+
+        <div class="transaction">
+
+          <div class="tx-left">
+            <div class="tx-icon">📥</div>
+            <div>
+              <b>Money Received</b>
+              <small>Today, 10:30 AM</small>
+            </div>
+          </div>
+
+          <div class="plus">+₹2,000</div>
+
+        </div>
+
+        <div class="transaction">
+
+          <div class="tx-left">
+            <div class="tx-icon">📱</div>
+            <div>
+              <b>Mobile Recharge</b>
+              <small>Yesterday</small>
+            </div>
+          </div>
+
+          <div class="minus">-₹299</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+    <div class="section">
+
+      <h2>Profile</h2>
+
+      <div class="profile-row">
+        <b>Name</b>
+        <span id="profileName">User</span>
+      </div>
+
+      <div class="profile-row">
+        <b>Username</b>
+        <span id="profileEmail">user@example.com</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+
+    <button onclick="window.scrollTo(0,0)">
+      <div>🏠</div>
+      Home
+    </button>
+
+    <button onclick="scrollToHistory()">
+      <div>📜</div>
+      History
+    </button>
+
+    <button onclick="openModal('Send Money')">
+      <div>💸</div>
+      Send
+    </button>
+
+    <button onclick="scrollToProfile()">
+      <div>👤</div>
+      Profile
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeModal()">×</button>
+
+    <h2 id="modalTitle">GoldPay</h2>
+
+    <input id="modalAmount" type="number" placeholder="Enter Amount">
+
+    <input id="modalReceiver" type="text"
+           placeholder="Receiver Username / Mobile">
+
+    <button class="gold-btn" onclick="processTransaction()">
+      Continue
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+let currentAction = "";
+let balance = 5000;
+
+
+/* LOGIN */
+
+function login(){
+
+  let email = document.getElementById("loginEmail").value;
+  let password = document.getElementById("loginPassword").value;
+
+  if(email === "" || password === ""){
+    alert("Please enter username and password.");
+    return;
+  }
+
+  document.getElementById("auth").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  document.getElementById("userName").innerText = email;
+  document.getElementById("profileName").innerText = email;
+  document.getElementById("profileEmail").innerText = email;
+}
+
+
+/* REGISTER */
+
+function register(){
+
+  let name = document.getElementById("regName").value;
+  let email = document.getElementById("regEmail").value;
+  let password = document.getElementById("regPassword").value;
+
+  if(name === "" || email === "" || password === ""){
+    alert("Please fill all fields.");
+    return;
+  }
+
+  alert("Account created successfully!");
+
+  document.getElementById("loginEmail").value = email;
+
+  showLogin();
+}
+
+
+/* SWITCH FORMS */
+
+function showRegister(){
+
+  document.getElementById("loginForm").classList.add("hidden");
+  document.getElementById("registerForm").classList.remove("hidden");
+
+}
+
+function showLogin(){
+
+  document.getElementById("registerForm").classList.add("hidden");
+  document.getElementById("loginForm").classList.remove("hidden");
+
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+  document.getElementById("app").classList.add("hidden");
+  document.getElementById("auth").classList.remove("hidden");
+
+}
+
+
+/* MODAL */
+
+function openModal(action){
+
+  currentAction = action;
+
+  document.getElementById("modalTitle").innerText = action;
+
+  document.getElementById("modal").classList.remove("hidden");
+
+}
+
+function closeModal(){
+
+  document.getElementById("modal").classList.add("hidden");
+
+}
+
+
+/* TRANSACTION */
+
+function processTransaction(){
+
+  let amount = Number(
+    document.getElementById("modalAmount").value
+  );
+
+  if(!amount || amount <= 0){
+    alert("Enter a valid amount.");
+    return;
+  }
