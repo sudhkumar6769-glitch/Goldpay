@@ -3,611 +3,704 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldPay - Investment Demo</title>
+<title>GoldPay</title>
 
 <style>
-*{box-sizing:border-box}
-body{
+*{
   margin:0;
+  padding:0;
+  box-sizing:border-box;
   font-family:Arial,sans-serif;
-  background:#080808;
-  color:#fff;
 }
-header{
-  background:#111;
-  border-bottom:1px solid #333;
-  padding:15px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:sticky;
-  top:0;
-  z-index:10;
+
+body{
+  background:#f5f6fa;
+  color:#222;
 }
-.logo{color:#e5bd5a;font-size:25px;font-weight:bold}
-.container{max-width:1100px;margin:auto;padding:25px 18px}
+
 button{
-  border:0;
-  padding:12px 18px;
-  border-radius:8px;
   cursor:pointer;
-  font-weight:bold;
 }
-.gold{background:#e5bd5a;color:#111}
-.dark{background:#222;color:white;border:1px solid #444}
-.danger{background:#8b2222;color:white}
-.hero{
-  padding:60px 10px;
-  text-align:center;
+
+.hidden{
+  display:none!important;
 }
-.hero h1{
-  font-size:50px;
-  margin:10px 0;
-  color:#f0d078;
-}
-.hero p{color:#aaa;line-height:1.6}
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-}
-.card{
-  background:#131313;
-  border:1px solid #292929;
-  border-radius:15px;
-  padding:20px;
-}
-.card h3{color:#e5bd5a}
-.balance{
-  font-size:30px;
-  color:#f0d078;
-  font-weight:bold;
-}
-input,select{
-  width:100%;
-  padding:12px;
-  margin:7px 0 14px;
-  background:#090909;
-  border:1px solid #444;
-  color:white;
-  border-radius:8px;
-}
-label{color:#aaa;font-size:14px}
-section{margin-top:25px}
-.hidden{display:none}
-nav button{margin:3px}
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-th,td{
-  padding:11px;
-  border-bottom:1px solid #333;
-  text-align:left;
-  font-size:14px;
-}
-.status{
-  color:#e5bd5a;
-}
-.notice{
-  background:#19150b;
-  border:1px solid #4c3b15;
-  padding:14px;
-  border-radius:10px;
-  color:#d9c783;
-  margin:15px 0;
-}
-.modal{
-  position:fixed;
-  inset:0;
-  background:#000c;
+
+/* LOGIN */
+.auth{
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index:20;
+  padding:20px;
+  background:linear-gradient(135deg,#111,#3b2b05);
 }
-.modalbox{
-  background:#151515;
-  padding:25px;
-  width:90%;
-  max-width:420px;
-  border-radius:15px;
-  border:1px solid #444;
+
+.auth-box{
+  width:100%;
+  max-width:400px;
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 20px 50px #0008;
 }
-footer{
-  margin-top:50px;
-  padding:25px;
+
+.logo{
+  text-align:center;
+  font-size:32px;
+  font-weight:bold;
+  color:#d4a017;
+  margin-bottom:8px;
+}
+
+.subtitle{
   text-align:center;
   color:#777;
-  border-top:1px solid #222;
+  margin-bottom:25px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#d4a017;
+}
+
+.gold-btn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:#d4a017;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.switch{
+  text-align:center;
+  margin-top:18px;
+  color:#777;
+}
+
+.switch span{
+  color:#b8860b;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* APP */
+.app{
+  min-height:100vh;
+}
+
+.topbar{
+  background:#111;
+  color:white;
+  padding:18px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.top-logo{
+  font-size:25px;
+  font-weight:bold;
+  color:#e0ad21;
+}
+
+.logout{
+  border:1px solid #e0ad21;
+  background:transparent;
+  color:#e0ad21;
+  padding:8px 14px;
+  border-radius:8px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:25px 20px 100px;
+}
+
+.welcome{
+  margin-bottom:20px;
+}
+
+.balance{
+  background:linear-gradient(135deg,#151515,#b8860b);
+  color:white;
+  border-radius:20px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.balance small{
+  opacity:.8;
+}
+
+.amount{
+  font-size:35px;
+  margin:10px 0 20px;
+  font-weight:bold;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.action{
+  background:white;
+  border:0;
+  padding:20px 10px;
+  border-radius:15px;
+  box-shadow:0 3px 15px #0001;
+}
+
+.action .icon{
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+.section{
+  background:white;
+  margin-top:25px;
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 3px 15px #0001;
+}
+
+.section h2{
+  margin-bottom:15px;
+}
+
+.transaction{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 0;
+  border-bottom:1px solid #eee;
+}
+
+.transaction:last-child{
+  border-bottom:0;
+}
+
+.tx-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.tx-icon{
+  width:40px;
+  height:40px;
+  background:#fff4d2;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.plus{
+  color:green;
+  font-weight:bold;
+}
+
+.minus{
+  color:red;
+  font-weight:bold;
+}
+
+.profile-row{
+  margin:15px 0;
+}
+
+.profile-row b{
+  display:block;
+  margin-bottom:5px;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  display:flex;
+  justify-content:space-around;
+  padding:12px 5px;
+  box-shadow:0 -3px 15px #0002;
+}
+
+.bottom-nav button{
+  background:none;
+  border:0;
+  font-size:12px;
+}
+
+.bottom-nav div{
+  font-size:21px;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.modal-box{
+  width:100%;
+  max-width:400px;
+  background:white;
+  padding:25px;
+  border-radius:18px;
+}
+
+.close{
+  float:right;
+  border:0;
+  background:none;
+  font-size:25px;
+}
+
+@media(max-width:600px){
+  .actions{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .container{
+    padding-left:15px;
+    padding-right:15px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">GoldPay</div>
-  <div id="headerButtons">
-    <button class="gold" onclick="openLogin()">Login</button>
-  </div>
-</header>
+<!-- LOGIN / REGISTER -->
+<div id="auth" class="auth">
 
-<div id="home">
+  <div class="auth-box">
 
-<section class="hero">
-  <div class="status">● SECURE DEMO PLATFORM</div>
-  <h1>Invest with clarity.</h1>
-  <p>
-    GoldPay is a demonstration investment dashboard with
-    accounts, portfolio, transactions and KYC workflow.
-  </p>
+    <div class="logo">💰 GoldPay</div>
+    <div class="subtitle">Simple & Secure Wallet</div>
 
-  <button class="gold" onclick="openSignup()">Create Account</button>
-  <button class="dark" onclick="openLogin()">Login</button>
-</section>
+    <div id="loginForm">
 
-<section class="container">
-  <div class="cards">
+      <input id="loginEmail" type="text" placeholder="Username / Email">
+      <input id="loginPassword" type="password" placeholder="Password">
 
-    <div class="card">
-      <h3>Accounts</h3>
-      <p>Manage your demo account and profile.</p>
+      <button class="gold-btn" onclick="login()">Login</button>
+
+      <div class="switch">
+        New user?
+        <span onclick="showRegister()">Create Account</span>
+      </div>
+
     </div>
 
-    <div class="card">
-      <h3>Investment Plans</h3>
-      <p>Choose from available demonstration plans.</p>
-    </div>
+    <div id="registerForm" class="hidden">
 
-    <div class="card">
-      <h3>Transactions</h3>
-      <p>Track deposits, withdrawals and investments.</p>
+      <input id="regName" type="text" placeholder="Full Name">
+      <input id="regEmail" type="text" placeholder="Username / Email">
+      <input id="regPassword" type="password" placeholder="Create Password">
+
+      <button class="gold-btn" onclick="register()">Register</button>
+
+      <div class="switch">
+        Already have an account?
+        <span onclick="showLogin()">Login</span>
+      </div>
+
     </div>
 
   </div>
-</section>
+</div>
+
+
+<!-- MAIN APP -->
+<div id="app" class="app hidden">
+
+  <div class="topbar">
+    <div class="top-logo">💰 GoldPay</div>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="container">
+
+    <div class="welcome">
+      <h2>Hello, <span id="userName">User</span> 👋</h2>
+      <p>Welcome to your GoldPay wallet.</p>
+    </div>
+
+    <!-- BALANCE -->
+    <div class="balance">
+      <small>Available Balance</small>
+      <div class="amount">₹<span id="balance">5,000.00</span></div>
+      <small>GoldPay Wallet</small>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+
+      <button class="action" onclick="openModal('Send Money')">
+        <div class="icon">💸</div>
+        Send
+      </button>
+
+      <button class="action" onclick="openModal('Receive Money')">
+        <div class="icon">📥</div>
+        Receive
+      </button>
+
+      <button class="action" onclick="openModal('Recharge')">
+        <div class="icon">📱</div>
+        Recharge
+      </button>
+
+      <button class="action" onclick="openModal('Add Money')">
+        <div class="icon">➕</div>
+        Add Money
+      </button>
+
+    </div>
+
+
+    <!-- TRANSACTION HISTORY -->
+    <div class="section">
+
+      <h2>Transaction History</h2>
+
+      <div id="transactions">
+
+        <div class="transaction">
+
+          <div class="tx-left">
+            <div class="tx-icon">📥</div>
+            <div>
+              <b>Money Received</b>
+              <small>Today, 10:30 AM</small>
+            </div>
+          </div>
+
+          <div class="plus">+₹2,000</div>
+
+        </div>
+
+        <div class="transaction">
+
+          <div class="tx-left">
+            <div class="tx-icon">📱</div>
+            <div>
+              <b>Mobile Recharge</b>
+              <small>Yesterday</small>
+            </div>
+          </div>
+
+          <div class="minus">-₹299</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+    <div class="section">
+
+      <h2>Profile</h2>
+
+      <div class="profile-row">
+        <b>Name</b>
+        <span id="profileName">User</span>
+      </div>
+
+      <div class="profile-row">
+        <b>Username</b>
+        <span id="profileEmail">user@example.com</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+
+    <button onclick="window.scrollTo(0,0)">
+      <div>🏠</div>
+      Home
+    </button>
+
+    <button onclick="scrollToHistory()">
+      <div>📜</div>
+      History
+    </button>
+
+    <button onclick="openModal('Send Money')">
+      <div>💸</div>
+      Send
+    </button>
+
+    <button onclick="scrollToProfile()">
+      <div>👤</div>
+      Profile
+    </button>
+
+  </div>
 
 </div>
 
 
-<!-- DASHBOARD -->
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
 
-<div id="dashboard" class="container hidden">
+  <div class="modal-box">
 
-<nav>
-  <button class="gold" onclick="showPage('overview')">Dashboard</button>
-  <button class="dark" onclick="showPage('plans')">Plans</button>
-  <button class="dark" onclick="showPage('transactions')">Transactions</button>
-  <button class="dark" onclick="showPage('profile')">Profile</button>
-  <button class="danger" onclick="logout()">Logout</button>
-</nav>
+    <button class="close" onclick="closeModal()">×</button>
 
+    <h2 id="modalTitle">GoldPay</h2>
 
-<!-- OVERVIEW -->
+    <input id="modalAmount" type="number" placeholder="Enter Amount">
 
-<section id="overview">
+    <input id="modalReceiver" type="text"
+           placeholder="Receiver Username / Mobile">
 
-<h2>Welcome, <span id="userName"></span> 👋</h2>
+    <button class="gold-btn" onclick="processTransaction()">
+      Continue
+    </button>
 
-<div class="cards">
-
-<div class="card">
-<p>Available Balance</p>
-<div class="balance" id="balance">₹0</div>
-</div>
-
-<div class="card">
-<p>Total Investment</p>
-<div class="balance" id="investment">₹0</div>
-</div>
-
-<div class="card">
-<p>Portfolio Value</p>
-<div class="balance" id="portfolio">₹0</div>
-</div>
-
-</div>
-
-<div class="notice">
-<strong>Demo Mode:</strong>
-This website does not process real money. Deposits and withdrawals
-are simulated in your browser.
-</div>
-
-<div class="cards">
-
-<div class="card">
-<h3>Deposit</h3>
-<input type="number" id="depositAmount" placeholder="Amount">
-<button class="gold" onclick="deposit()">Deposit</button>
-</div>
-
-<div class="card">
-<h3>Withdraw</h3>
-<input type="number" id="withdrawAmount" placeholder="Amount">
-<button class="gold" onclick="withdraw()">Withdraw</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PLANS -->
-
-<section id="plans" class="hidden">
-
-<h2>Investment Plans</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>Starter</h3>
-<div class="balance">₹500</div>
-<p>Demo investment plan</p>
-<button class="gold" onclick="invest(500,'Starter')">Invest</button>
-</div>
-
-<div class="card">
-<h3>Silver</h3>
-<div class="balance">₹2,000</div>
-<p>Demo investment plan</p>
-<button class="gold" onclick="invest(2000,'Silver')">Invest</button>
-</div>
-
-<div class="card">
-<h3>Gold</h3>
-<div class="balance">₹5,000</div>
-<p>Demo investment plan</p>
-<button class="gold" onclick="invest(5000,'Gold')">Invest</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- TRANSACTIONS -->
-
-<section id="transactions" class="hidden">
-
-<h2>Transaction History</h2>
-
-<div class="card">
-
-<table>
-
-<thead>
-<tr>
-<th>Type</th>
-<th>Amount</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody id="transactionList"></tbody>
-
-</table>
-
-</div>
-
-</section>
-
-
-<!-- PROFILE -->
-
-<section id="profile" class="hidden">
-
-<h2>Profile & KYC</h2>
-
-<div class="card">
-
-<label>Name</label>
-<input id="profileName">
-
-<label>Email</label>
-<input id="profileEmail">
-
-<label>KYC Status</label>
-
-<select id="kyc">
-<option>Pending</option>
-<option>Submitted</option>
-<option>Verified</option>
-</select>
-
-<button class="gold" onclick="saveProfile()">Save Profile</button>
-
-</div>
-
-</section>
-
-<footer>
-GoldPay © 2026 — Demonstration website only.
-</footer>
-
-</div>
-
-
-<!-- LOGIN MODAL -->
-
-<div id="loginModal" class="modal hidden">
-
-<div class="modalbox">
-
-<h2>Login</h2>
-
-<label>Email</label>
-<input id="loginEmail" type="email" placeholder="Email">
-
-<label>Password</label>
-<input id="loginPassword" type="password" placeholder="Password">
-
-<button class="gold" onclick="login()">Login</button>
-<button class="dark" onclick="closeModals()">Cancel</button>
-
-<p class="muted">
-Demo login: create an account first.
-</p>
-
-</div>
-
-</div>
-
-
-<!-- SIGNUP MODAL -->
-
-<div id="signupModal" class="modal hidden">
-
-<div class="modalbox">
-
-<h2>Create Account</h2>
-
-<label>Name</label>
-<input id="signupName" placeholder="Your name">
-
-<label>Email</label>
-<input id="signupEmail" type="email" placeholder="Email">
-
-<label>Password</label>
-<input id="signupPassword" type="password" placeholder="Password">
-
-<button class="gold" onclick="signup()">Create Account</button>
-<button class="dark" onclick="closeModals()">Cancel</button>
-
-</div>
+  </div>
 
 </div>
 
 
 <script>
 
-let user = JSON.parse(localStorage.getItem("goldpayUser")) || null;
+let currentAction = "";
+let balance = 5000;
 
-let transactions =
-JSON.parse(localStorage.getItem("goldpayTransactions")) || [];
 
-function save(){
-  localStorage.setItem("goldpayUser",JSON.stringify(user));
-  localStorage.setItem("goldpayTransactions",JSON.stringify(transactions));
-}
-
-function openLogin(){
-  document.getElementById("loginModal").classList.remove("hidden");
-}
-
-function openSignup(){
-  document.getElementById("signupModal").classList.remove("hidden");
-}
-
-function closeModals(){
-  document.getElementById("loginModal").classList.add("hidden");
-  document.getElementById("signupModal").classList.add("hidden");
-}
-
-function signup(){
-
-  let name=document.getElementById("signupName").value;
-  let email=document.getElementById("signupEmail").value;
-  let password=document.getElementById("signupPassword").value;
-
-  if(!name || !email || !password){
-    alert("Please fill all fields");
-    return;
-  }
-
-  user={
-    name:name,
-    email:email,
-    password:password,
-    balance:0,
-    investment:0,
-    kyc:"Pending"
-  };
-
-  transactions=[];
-
-  save();
-  closeModals();
-  showDashboard();
-
-  alert("Account created successfully!");
-}
+/* LOGIN */
 
 function login(){
 
-  let email=document.getElementById("loginEmail").value;
-  let password=document.getElementById("loginPassword").value;
+  let email = document.getElementById("loginEmail").value;
+  let password = document.getElementById("loginPassword").value;
 
-  if(!user){
-    alert("Please create an account first.");
+  if(email === "" || password === ""){
+    alert("Please enter username and password.");
     return;
   }
 
-  if(email===user.email && password===user.password){
-    closeModals();
-    showDashboard();
-  }else{
-    alert("Incorrect email or password.");
-  }
+  document.getElementById("auth").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+
+  document.getElementById("userName").innerText = email;
+  document.getElementById("profileName").innerText = email;
+  document.getElementById("profileEmail").innerText = email;
 }
 
-function showDashboard(){
 
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
+/* REGISTER */
 
-  document.getElementById("userName").innerText=user.name;
+function register(){
 
-  updateDashboard();
+  let name = document.getElementById("regName").value;
+  let email = document.getElementById("regEmail").value;
+  let password = document.getElementById("regPassword").value;
 
-  showPage("overview");
-}
-
-function updateDashboard(){
-
-  document.getElementById("balance").innerText=
-  "₹"+user.balance.toLocaleString();
-
-  document.getElementById("investment").innerText=
-  "₹"+user.investment.toLocaleString();
-
-  document.getElementById("portfolio").innerText=
-  "₹"+(user.balance+user.investment).toLocaleString();
-
-  document.getElementById("profileName").value=user.name;
-  document.getElementById("profileEmail").value=user.email;
-  document.getElementById("kyc").value=user.kyc;
-
-  renderTransactions();
-}
-
-function deposit(){
-
-  let amount=Number(document.getElementById("depositAmount").value);
-
-  if(amount<=0){
-    alert("Enter a valid amount");
+  if(name === "" || email === "" || password === ""){
+    alert("Please fill all fields.");
     return;
   }
 
-  user.balance+=amount;
+  alert("Account created successfully!");
 
-  transactions.unshift({
-    type:"Deposit",
-    amount:amount,
-    status:"Demo Completed"
-  });
+  document.getElementById("loginEmail").value = email;
 
-  save();
-  updateDashboard();
-
-  document.getElementById("depositAmount").value="";
-
-  alert("Demo deposit successful!");
+  showLogin();
 }
 
-function withdraw(){
 
-  let amount=Number(document.getElementById("withdrawAmount").value);
+/* SWITCH FORMS */
 
-  if(amount<=0 || amount>user.balance){
-    alert("Insufficient demo balance.");
-    return;
-  }
+function showRegister(){
 
-  user.balance-=amount;
+  document.getElementById("loginForm").classList.add("hidden");
+  document.getElementById("registerForm").classList.remove("hidden");
 
-  transactions.unshift({
-    type:"Withdrawal",
-    amount:amount,
-    status:"Demo Completed"
-  });
-
-  save();
-  updateDashboard();
-
-  document.getElementById("withdrawAmount").value="";
-
-  alert("Demo withdrawal successful!");
 }
 
-function invest(amount,plan){
+function showLogin(){
 
-  if(user.balance<amount){
-    alert("Insufficient demo balance. Deposit first.");
-    return;
-  }
+  document.getElementById("registerForm").classList.add("hidden");
+  document.getElementById("loginForm").classList.remove("hidden");
 
-  user.balance-=amount;
-  user.investment+=amount;
-
-  transactions.unshift({
-    type:"Investment - "+plan,
-    amount:amount,
-    status:"Demo Active"
-  });
-
-  save();
-  updateDashboard();
-
-  alert(plan+" plan activated in demo mode!");
 }
 
-function renderTransactions(){
 
-  let list=document.getElementById("transactionList");
-
-  if(transactions.length===0){
-    list.innerHTML=
-    "<tr><td colspan='3'>No transactions yet.</td></tr>";
-    return;
-  }
-
-  list.innerHTML=transactions.map(t=>`
-  <tr>
-    <td>${t.type}</td>
-    <td>₹${Number(t.amount).toLocaleString()}</td>
-    <td class="status">${t.status}</td>
-  </tr>
-  `).join("");
-}
-
-function saveProfile(){
-
-  user.name=document.getElementById("profileName").value;
-  user.email=document.getElementById("profileEmail").value;
-  user.kyc=document.getElementById("kyc").value;
-
-  save();
-  updateDashboard();
-
-  alert("Profile saved!");
-}
-
-function showPage(page){
-
-  ["overview","plans","transactions","profile"].forEach(id=>{
-    document.getElementById(id).classList.add("hidden");
-  });
-
-  document.getElementById(page).classList.remove("hidden");
-}
+/* LOGOUT */
 
 function logout(){
 
-  document.getElementById("dashboard").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
+  document.getElementById("app").classList.add("hidden");
+  document.getElementById("auth").classList.remove("hidden");
 
-  alert("Logged out.");
 }
 
-if(user){
-  showDashboard();
+
+/* MODAL */
+
+function openModal(action){
+
+  currentAction = action;
+
+  document.getElementById("modalTitle").innerText = action;
+
+  document.getElementById("modal").classList.remove("hidden");
+
+}
+
+function closeModal(){
+
+  document.getElementById("modal").classList.add("hidden");
+
+}
+
+
+/* TRANSACTION */
+
+function processTransaction(){
+
+  let amount = Number(
+    document.getElementById("modalAmount").value
+  );
+
+  if(!amount || amount <= 0){
+    alert("Enter a valid amount.");
+    return;
+  }
+
+  if(currentAction === "Send Money"){
+
+    if(amount > balance){
+      alert("Insufficient balance.");
+      return;
+    }
+
+    balance -= amount;
+
+    addTransaction(
+      "💸",
+      "Money Sent",
+      "-₹" + amount,
+      "minus"
+    );
+
+  }else{
+
+    balance += amount;
+
+    addTransaction(
+      "📥",
+      currentAction,
+      "+₹" + amount,
+      "plus"
+    );
+
+  }
+
+  document.getElementById("balance").innerText =
+    balance.toLocaleString("en-IN",{
+      minimumFractionDigits:2
+    });
+
+  document.getElementById("modalAmount").value = "";
+
+  document.getElementById("modalReceiver").value = "";
+
+  closeModal();
+
+}
+
+
+/* ADD HISTORY */
+
+function addTransaction(icon,title,amount,className){
+
+  let history =
+    document.getElementById("transactions");
+
+  let div = document.createElement("div");
+
+  div.className = "transaction";
+
+  div.innerHTML = `
+
+    <div class="tx-left">
+
+      <div class="tx-icon">
+        ${icon}
+      </div>
+
+      <div>
+        <b>${title}</b>
+        <small>Just now</small>
+      </div>
+
+    </div>
+
+    <div class="${className}">
+      ${amount}
+    </div>
+
+  `;
+
+  history.prepend(div);
+
+}
+
+
+/* NAVIGATION */
+
+function scrollToHistory(){
+
+  document.querySelector(".section").scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+function scrollToProfile(){
+
+  let sections = document.querySelectorAll(".section");
+
+  sections[1].scrollIntoView({
+    behavior:"smooth"
+  });
+
 }
 
 </script>
 
 </body>
-</html>
+  </html>
