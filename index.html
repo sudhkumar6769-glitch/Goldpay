@@ -3,289 +3,545 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldPay</title>
+<title>GoldPay — Digital Finance Platform</title>
 
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 }
+
+:root{
+  --gold:#d7a52b;
+  --gold2:#f4cf67;
+  --black:#070707;
+  --card:#111111;
+  --text:#f5f5f5;
+  --muted:#999;
+  --line:#262626;
+}
+
+html{scroll-behavior:smooth}
 
 body{
-  background:#f5f6fa;
-  color:#222;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* LOGIN */
-.auth{
+  background:
+    radial-gradient(circle at 80% 5%,rgba(215,165,43,.13),transparent 28%),
+    #050505;
+  color:var(--text);
   min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  background:linear-gradient(135deg,#111,#3b2b05);
 }
 
-.auth-box{
-  width:100%;
-  max-width:400px;
-  background:white;
-  padding:30px;
-  border-radius:20px;
-  box-shadow:0 20px 50px #0008;
+a{text-decoration:none;color:inherit}
+
+.container{
+  width:min(1120px,92%);
+  margin:auto;
+}
+
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  backdrop-filter:blur(16px);
+  background:rgba(5,5,5,.88);
+  border-bottom:1px solid #202020;
+}
+
+.nav{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
 .logo{
-  text-align:center;
-  font-size:32px;
-  font-weight:bold;
-  color:#d4a017;
-  margin-bottom:8px;
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-1px;
 }
 
-.subtitle{
-  text-align:center;
-  color:#777;
-  margin-bottom:25px;
+.logo span{color:var(--gold2)}
+
+.navlinks{
+  display:flex;
+  gap:28px;
+  color:#aaa;
+  font-size:14px;
 }
 
-input{
-  width:100%;
-  padding:14px;
-  margin:8px 0;
-  border:1px solid #ddd;
-  border-radius:10px;
-  outline:none;
+.navlinks a:hover{color:white}
+
+.navbuttons{
+  display:flex;
+  gap:10px;
 }
 
-input:focus{
-  border-color:#d4a017;
-}
-
-.gold-btn{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:10px;
-  background:#d4a017;
+.btn{
+  border:1px solid #353535;
+  background:#121212;
   color:white;
-  font-size:16px;
-  font-weight:bold;
-  margin-top:10px;
+  padding:11px 17px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.25s;
 }
 
-.switch{
-  text-align:center;
-  margin-top:18px;
-  color:#777;
+.btn:hover{
+  transform:translateY(-2px);
+  border-color:var(--gold);
 }
 
-.switch span{
-  color:#b8860b;
+.btn.gold{
+  background:linear-gradient(135deg,#c49320,#f1c957);
+  color:#080808;
+  border:none;
   font-weight:bold;
+}
+
+.menu{
+  display:none;
+  font-size:25px;
   cursor:pointer;
 }
 
-/* APP */
-.app{
-  min-height:100vh;
+/* HERO */
+.hero{
+  padding:100px 0 80px;
+  text-align:center;
 }
 
-.topbar{
-  background:#111;
-  color:white;
-  padding:18px 5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.top-logo{
-  font-size:25px;
-  font-weight:bold;
-  color:#e0ad21;
-}
-
-.logout{
-  border:1px solid #e0ad21;
-  background:transparent;
-  color:#e0ad21;
+.badge{
+  display:inline-flex;
+  border:1px solid #443817;
+  background:#151107;
+  color:var(--gold2);
   padding:8px 14px;
-  border-radius:8px;
+  border-radius:30px;
+  font-size:12px;
+  margin-bottom:22px;
 }
 
-.container{
-  max-width:1100px;
+.hero h1{
+  font-size:clamp(42px,7vw,76px);
+  line-height:1;
+  letter-spacing:-4px;
+  max-width:850px;
   margin:auto;
-  padding:25px 20px 100px;
 }
 
-.welcome{
+.hero h1 span{
+  color:var(--gold2);
+}
+
+.hero p{
+  max-width:650px;
+  margin:25px auto;
+  color:#999;
+  line-height:1.7;
+}
+
+.hero-buttons{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:65px;
+}
+
+.stat{
+  background:linear-gradient(145deg,#121212,#0b0b0b);
+  border:1px solid var(--line);
+  padding:25px;
+  border-radius:18px;
+}
+
+.stat strong{
+  display:block;
+  font-size:27px;
+  color:var(--gold2);
+  margin-bottom:6px;
+}
+
+.stat span{
+  color:#888;
+  font-size:13px;
+}
+
+/* SECTION */
+section{
+  padding:85px 0;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:45px;
+}
+
+.section-title small{
+  color:var(--gold2);
+  letter-spacing:2px;
+}
+
+.section-title h2{
+  font-size:40px;
+  margin:10px 0;
+}
+
+.section-title p{
+  color:#888;
+}
+
+/* FEATURES */
+.features{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+
+.feature{
+  background:#0e0e0e;
+  border:1px solid var(--line);
+  padding:25px;
+  border-radius:18px;
+  transition:.3s;
+}
+
+.feature:hover{
+  transform:translateY(-6px);
+  border-color:#5b471b;
+}
+
+.icon{
+  width:45px;
+  height:45px;
+  border-radius:12px;
+  background:#1c1609;
+  display:grid;
+  place-items:center;
+  font-size:21px;
+  margin-bottom:18px;
+}
+
+.feature h3{
+  margin-bottom:10px;
+}
+
+.feature p{
+  color:#858585;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* CALCULATOR */
+.calculator{
+  max-width:700px;
+  margin:auto;
+  background:#0d0d0d;
+  border:1px solid #292929;
+  padding:30px;
+  border-radius:22px;
+}
+
+.inputbox{
+  margin-bottom:18px;
+}
+
+.inputbox label{
+  display:block;
+  color:#999;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.inputbox input{
+  width:100%;
+  padding:16px;
+  border-radius:12px;
+  border:1px solid #303030;
+  background:#151515;
+  color:white;
+  outline:none;
+  font-size:17px;
+}
+
+.inputbox input:focus{
+  border-color:var(--gold);
+}
+
+.result{
+  margin-top:20px;
+  padding:22px;
+  background:#161206;
+  border:1px solid #493a18;
+  border-radius:15px;
+  text-align:center;
+}
+
+.result small{color:#999}
+
+.result strong{
+  display:block;
+  color:var(--gold2);
+  font-size:32px;
+  margin-top:6px;
+}
+
+/* STEPS */
+.steps{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.step{
+  position:relative;
+  padding:25px;
+  background:#0e0e0e;
+  border:1px solid #242424;
+  border-radius:18px;
+}
+
+.number{
+  color:var(--gold2);
+  font-size:13px;
   margin-bottom:20px;
+}
+
+.step p{
+  color:#888;
+  line-height:1.6;
+  margin-top:8px;
+  font-size:14px;
+}
+
+/* DASHBOARD */
+.dashboard{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:20px;
+}
+
+.dash-card{
+  background:#0e0e0e;
+  border:1px solid #292929;
+  border-radius:20px;
+  padding:28px;
 }
 
 .balance{
-  background:linear-gradient(135deg,#151515,#b8860b);
-  color:white;
-  border-radius:20px;
-  padding:25px;
-  margin-bottom:20px;
-}
-
-.balance small{
-  opacity:.8;
-}
-
-.amount{
-  font-size:35px;
-  margin:10px 0 20px;
-  font-weight:bold;
+  font-size:38px;
+  color:var(--gold2);
+  margin:12px 0;
 }
 
 .actions{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:25px;
 }
 
 .action{
-  background:white;
-  border:0;
-  padding:20px 10px;
-  border-radius:15px;
-  box-shadow:0 3px 15px #0001;
+  padding:15px;
+  text-align:center;
+  border-radius:12px;
+  background:#171717;
+  border:1px solid #292929;
+  cursor:pointer;
 }
 
-.action .icon{
-  font-size:25px;
-  margin-bottom:8px;
+.action:hover{
+  border-color:var(--gold);
 }
 
-.section{
-  background:white;
-  margin-top:25px;
+/* FAQ */
+.faq{
+  max-width:800px;
+  margin:auto;
+}
+
+details{
+  background:#0e0e0e;
+  border:1px solid #262626;
   padding:20px;
-  border-radius:18px;
-  box-shadow:0 3px 15px #0001;
+  border-radius:14px;
+  margin-bottom:10px;
 }
 
-.section h2{
-  margin-bottom:15px;
-}
-
-.transaction{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 0;
-  border-bottom:1px solid #eee;
-}
-
-.transaction:last-child{
-  border-bottom:0;
-}
-
-.tx-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.tx-icon{
-  width:40px;
-  height:40px;
-  background:#fff4d2;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.plus{
-  color:green;
+summary{
+  cursor:pointer;
   font-weight:bold;
 }
 
-.minus{
-  color:red;
-  font-weight:bold;
+details p{
+  color:#888;
+  line-height:1.6;
+  padding-top:15px;
 }
 
-.profile-row{
-  margin:15px 0;
-}
-
-.profile-row b{
-  display:block;
-  margin-bottom:5px;
-}
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:white;
-  display:flex;
-  justify-content:space-around;
-  padding:12px 5px;
-  box-shadow:0 -3px 15px #0002;
-}
-
-.bottom-nav button{
-  background:none;
-  border:0;
-  font-size:12px;
-}
-
-.bottom-nav div{
-  font-size:21px;
-}
-
-/* MODAL */
+/* LOGIN MODAL */
 .modal{
+  display:none;
   position:fixed;
   inset:0;
-  background:#0008;
-  display:flex;
-  justify-content:center;
+  z-index:3000;
+  background:rgba(0,0,0,.8);
+  backdrop-filter:blur(8px);
   align-items:center;
+  justify-content:center;
   padding:20px;
 }
 
-.modal-box{
-  width:100%;
-  max-width:400px;
-  background:white;
-  padding:25px;
-  border-radius:18px;
+.modal.active{display:flex}
+
+.modalbox{
+  width:min(420px,100%);
+  background:#0d0d0d;
+  border:1px solid #343434;
+  border-radius:22px;
+  padding:30px;
+  position:relative;
 }
 
 .close{
-  float:right;
-  border:0;
-  background:none;
-  font-size:25px;
+  position:absolute;
+  right:20px;
+  top:17px;
+  cursor:pointer;
+  color:#888;
+  font-size:22px;
 }
 
-@media(max-width:600px){
-  .actions{
-    grid-template-columns:repeat(2,1fr);
+.modalbox h2{
+  margin-bottom:7px;
+}
+
+.modalbox p{
+  color:#777;
+  font-size:13px;
+  margin-bottom:22px;
+}
+
+.form input{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  background:#151515;
+  color:white;
+  border:1px solid #303030;
+  border-radius:10px;
+  outline:none;
+}
+
+.form button{
+  width:100%;
+  margin-top:5px;
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid #202020;
+  padding:40px 0;
+  color:#777;
+  text-align:center;
+}
+
+.footer-logo{
+  font-size:23px;
+  color:white;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.footer-logo span{color:var(--gold2)}
+
+.notice{
+  margin-top:20px;
+  font-size:11px;
+  color:#555;
+  max-width:700px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:25px;
+  right:20px;
+  background:#171717;
+  border:1px solid #493a18;
+  color:white;
+  padding:15px 18px;
+  border-radius:12px;
+  transform:translateY(100px);
+  opacity:0;
+  transition:.3s;
+  z-index:5000;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* MOBILE */
+@media(max-width:800px){
+
+  .navlinks,.navbuttons{
+    display:none;
   }
 
-  .container{
-    padding-left:15px;
-    padding-right:15px;
+  .menu{
+    display:block;
+  }
+
+  .nav.mobile-open{
+    position:relative;
+  }
+
+  .nav.mobile-open .navlinks{
+    display:flex;
+    position:absolute;
+    top:72px;
+    left:0;
+    right:0;
+    background:#090909;
+    padding:20px;
+    flex-direction:column;
+    border-bottom:1px solid #222;
+  }
+
+  .hero{
+    padding:75px 0 55px;
+  }
+
+  .hero h1{
+    letter-spacing:-2px;
+  }
+
+  .stats,
+  .features,
+  .steps,
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    grid-template-columns:1fr;
+  }
+
+  .section-title h2{
+    font-size:32px;
   }
 }
 </style>
@@ -293,148 +549,244 @@ input:focus{
 
 <body>
 
-<!-- LOGIN / REGISTER -->
-<div id="auth" class="auth">
+<header>
+  <div class="container nav" id="nav">
 
-  <div class="auth-box">
+    <a href="#" class="logo">
+      Gold<span>Pay</span>
+    </a>
 
-    <div class="logo">💰 GoldPay</div>
-    <div class="subtitle">Simple & Secure Wallet</div>
-
-    <div id="loginForm">
-
-      <input id="loginEmail" type="text" placeholder="Username / Email">
-      <input id="loginPassword" type="password" placeholder="Password">
-
-      <button class="gold-btn" onclick="login()">Login</button>
-
-      <div class="switch">
-        New user?
-        <span onclick="showRegister()">Create Account</span>
-      </div>
-
+    <div class="navlinks">
+      <a href="#features">Features</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
     </div>
 
-    <div id="registerForm" class="hidden">
+    <div class="navbuttons">
+      <button class="btn" onclick="openLogin()">Login</button>
+      <button class="btn gold" onclick="openSignup()">Create Account</button>
+    </div>
 
-      <input id="regName" type="text" placeholder="Full Name">
-      <input id="regEmail" type="text" placeholder="Username / Email">
-      <input id="regPassword" type="password" placeholder="Create Password">
+    <div class="menu" onclick="toggleMenu()">☰</div>
 
-      <button class="gold-btn" onclick="register()">Register</button>
+  </div>
+</header>
 
-      <div class="switch">
-        Already have an account?
-        <span onclick="showLogin()">Login</span>
-      </div>
 
+<main>
+
+<!-- HERO -->
+<section class="hero">
+<div class="container">
+
+  <div class="badge">● GOLDPAY DIGITAL PLATFORM</div>
+
+  <h1>
+    Manage Your Money.
+    <span>Smarter.</span>
+  </h1>
+
+  <p>
+    GoldPay brings account management, digital transactions,
+    tracking tools and a premium dashboard together in one simple experience.
+  </p>
+
+  <div class="hero-buttons">
+    <button class="btn gold" onclick="openSignup()">
+      Get Started →
+    </button>
+
+    <button class="btn" onclick="document.getElementById('features').scrollIntoView()">
+      Explore Platform
+    </button>
+  </div>
+
+
+  <div class="stats">
+
+    <div class="stat">
+      <strong>24/7</strong>
+      <span>Platform Access</span>
+    </div>
+
+    <div class="stat">
+      <strong>₹ INR</strong>
+      <span>Account Currency</span>
+    </div>
+
+    <div class="stat">
+      <strong>Secure</strong>
+      <span>Account Dashboard</span>
     </div>
 
   </div>
+
+</div>
+</section>
+
+
+<!-- FEATURES -->
+<section id="features">
+<div class="container">
+
+<div class="section-title">
+  <small>PLATFORM</small>
+  <h2>Everything in one place</h2>
+  <p>Simple tools designed for a clean digital finance experience.</p>
 </div>
 
+<div class="features">
 
-<!-- MAIN APP -->
-<div id="app" class="app hidden">
-
-  <div class="topbar">
-    <div class="top-logo">💰 GoldPay</div>
-    <button class="logout" onclick="logout()">Logout</button>
+  <div class="feature">
+    <div class="icon">💰</div>
+    <h3>Account Balance</h3>
+    <p>View your available balance and account activity from one dashboard.</p>
   </div>
 
-  <div class="container">
+  <div class="feature">
+    <div class="icon">⇅</div>
+    <h3>Transactions</h3>
+    <p>Keep track of deposits, withdrawals and account transactions.</p>
+  </div>
 
-    <div class="welcome">
-      <h2>Hello, <span id="userName">User</span> 👋</h2>
-      <p>Welcome to your GoldPay wallet.</p>
+  <div class="feature">
+    <div class="icon">📊</div>
+    <h3>Analytics</h3>
+    <p>Understand your account activity with simple tracking tools.</p>
+  </div>
+
+  <div class="feature">
+    <div class="icon">🛡️</div>
+    <h3>Account Security</h3>
+    <p>Designed for a secure account-management workflow.</p>
+  </div>
+
+</div>
+</div>
+</section>
+
+
+<!-- CALCULATOR -->
+<section id="calculator">
+<div class="container">
+
+<div class="section-title">
+  <small>CALCULATOR</small>
+  <h2>Digital Asset Calculator</h2>
+  <p>Enter an amount and instantly calculate the displayed value.</p>
+</div>
+
+<div class="calculator">
+
+  <div class="inputbox">
+    <label>Amount</label>
+    <input
+      id="amount"
+      type="number"
+      value="100"
+      min="0"
+      oninput="calculate()"
+    >
+  </div>
+
+  <div class="inputbox">
+    <label>Rate (₹ per unit)</label>
+    <input
+      id="rate"
+      type="number"
+      value="90"
+      min="0"
+      oninput="calculate()"
+    >
+  </div>
+
+  <div class="result">
+    <small>Calculated Value</small>
+    <strong id="result">₹9,000.00</strong>
+  </div>
+
+</div>
+</div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section id="how">
+<div class="container">
+
+<div class="section-title">
+  <small>HOW IT WORKS</small>
+  <h2>Start in four steps</h2>
+</div>
+
+<div class="steps">
+
+  <div class="step">
+    <div class="number">01</div>
+    <h3>Create Account</h3>
+    <p>Register your GoldPay account through the signup screen.</p>
+  </div>
+
+  <div class="step">
+    <div class="number">02</div>
+    <h3>Open Dashboard</h3>
+    <p>Access your account balance and platform tools.</p>
+  </div>
+
+  <div class="step">
+    <div class="number">03</div>
+    <h3>Manage Activity</h3>
+    <p>Use the available account and transaction tools.</p>
+  </div>
+
+  <div class="step">
+    <div class="number">04</div>
+    <h3>Track</h3>
+    <p>Review your activity and account information.</p>
+  </div>
+
+</div>
+</div>
+</section>
+
+
+<!-- DASHBOARD PREVIEW -->
+<section>
+<div class="container">
+
+<div class="section-title">
+  <small>APP PREVIEW</small>
+  <h2>GoldPay Dashboard</h2>
+  <p>A preview of the account interface.</p>
+</div>
+
+<div class="dashboard">
+
+  <div class="dash-card">
+
+    <small style="color:#888">AVAILABLE BALANCE</small>
+
+    <div class="balance" id="demoBalance">
+      ₹25,000.00
     </div>
 
-    <!-- BALANCE -->
-    <div class="balance">
-      <small>Available Balance</small>
-      <div class="amount">₹<span id="balance">5,000.00</span></div>
-      <small>GoldPay Wallet</small>
-    </div>
+    <span style="color:#777;font-size:13px">
+      Demo dashboard balance
+    </span>
 
-    <!-- ACTIONS -->
     <div class="actions">
 
-      <button class="action" onclick="openModal('Send Money')">
-        <div class="icon">💸</div>
-        Send
-      </button>
-
-      <button class="action" onclick="openModal('Receive Money')">
-        <div class="icon">📥</div>
-        Receive
-      </button>
-
-      <button class="action" onclick="openModal('Recharge')">
-        <div class="icon">📱</div>
-        Recharge
-      </button>
-
-      <button class="action" onclick="openModal('Add Money')">
-        <div class="icon">➕</div>
-        Add Money
-      </button>
-
-    </div>
-
-
-    <!-- TRANSACTION HISTORY -->
-    <div class="section">
-
-      <h2>Transaction History</h2>
-
-      <div id="transactions">
-
-        <div class="transaction">
-
-          <div class="tx-left">
-            <div class="tx-icon">📥</div>
-            <div>
-              <b>Money Received</b>
-              <small>Today, 10:30 AM</small>
-            </div>
-          </div>
-
-          <div class="plus">+₹2,000</div>
-
-        </div>
-
-        <div class="transaction">
-
-          <div class="tx-left">
-            <div class="tx-icon">📱</div>
-            <div>
-              <b>Mobile Recharge</b>
-              <small>Yesterday</small>
-            </div>
-          </div>
-
-          <div class="minus">-₹299</div>
-
-        </div>
-
+      <div class="action" onclick="showToast('Deposit screen selected')">
+        ➕<br>Deposit
       </div>
 
-    </div>
-
-
-    <!-- PROFILE -->
-    <div class="section">
-
-      <h2>Profile</h2>
-
-      <div class="profile-row">
-        <b>Name</b>
-        <span id="profileName">User</span>
+      <div class="action" onclick="showToast('Withdrawal screen selected')">
+        ↗<br>Withdraw
       </div>
 
-      <div class="profile-row">
-        <b>Username</b>
-        <span id="profileEmail">user@example.com</span>
+      <div class="action" onclick="showToast('Transaction history selected')">
+        📋<br>History
       </div>
 
     </div>
@@ -442,265 +794,331 @@ input:focus{
   </div>
 
 
-  <!-- BOTTOM NAV -->
-  <div class="bottom-nav">
+  <div class="dash-card">
 
-    <button onclick="window.scrollTo(0,0)">
-      <div>🏠</div>
-      Home
-    </button>
+    <h3>Recent Activity</h3>
 
-    <button onclick="scrollToHistory()">
-      <div>📜</div>
-      History
-    </button>
+    <div style="margin-top:22px">
 
-    <button onclick="openModal('Send Money')">
-      <div>💸</div>
-      Send
-    </button>
+      <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #222">
+        <span>Account Deposit</span>
+        <b style="color:#8dd36f">+₹5,000</b>
+      </div>
 
-    <button onclick="scrollToProfile()">
-      <div>👤</div>
-      Profile
+      <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #222">
+        <span>Service Payment</span>
+        <b style="color:#ff7777">-₹1,200</b>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;padding:13px 0">
+        <span>Reward Credit</span>
+        <b style="color:#8dd36f">+₹350</b>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</div>
+</section>
+
+
+<!-- FAQ -->
+<section id="faq">
+<div class="container">
+
+<div class="section-title">
+  <small>FAQ</small>
+  <h2>Frequently Asked Questions</h2>
+</div>
+
+<div class="faq">
+
+<details>
+  <summary>What is GoldPay?</summary>
+  <p>
+    GoldPay is a digital platform interface for account,
+    transaction and financial-management features.
+  </p>
+</details>
+
+<details>
+  <summary>Is the calculator live?</summary>
+  <p>
+    The calculator on this demo page works instantly in your browser.
+    Its rate is currently entered manually.
+  </p>
+</details>
+
+<details>
+  <summary>Can I use GoldPay on mobile?</summary>
+  <p>
+    Yes. The interface is responsive and adapts to mobile,
+    tablet and desktop screens.
+  </p>
+</details>
+
+<details>
+  <summary>Can real payments be connected?</summary>
+  <p>
+    Real payments require a properly configured payment gateway,
+    secure backend, authentication, transaction verification and
+    any applicable legal and regulatory requirements.
+  </p>
+</details>
+
+</div>
+</div>
+</section>
+
+</main>
+
+
+<footer>
+<div class="container">
+
+  <div class="footer-logo">
+    Gold<span>Pay</span>
+  </div>
+
+  <p>© 2026 GoldPay. All rights reserved.</p>
+
+  <div class="notice">
+    This website interface is a demonstration. Any real-money
+    financial service should be launched only after the required
+    legal, regulatory, KYC/AML, payment and security requirements
+    have been properly implemented.
+  </div>
+
+</div>
+</footer>
+
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+
+<div class="modalbox">
+
+  <div class="close" onclick="closeModals()">×</div>
+
+  <h2>Welcome Back</h2>
+  <p>Login to your GoldPay account.</p>
+
+  <div class="form">
+
+    <input id="loginEmail" type="email" placeholder="Email address">
+
+    <input id="loginPassword" type="password" placeholder="Password">
+
+    <button class="btn gold" onclick="login()">
+      Login
     </button>
 
   </div>
 
 </div>
+</div>
 
 
-<!-- MODAL -->
-<div id="modal" class="modal hidden">
+<!-- SIGNUP MODAL -->
+<div class="modal" id="signupModal">
 
-  <div class="modal-box">
+<div class="modalbox">
 
-    <button class="close" onclick="closeModal()">×</button>
+  <div class="close" onclick="closeModals()">×</div>
 
-    <h2 id="modalTitle">GoldPay</h2>
+  <h2>Create GoldPay Account</h2>
+  <p>Create a demo account to test the interface.</p>
 
-    <input id="modalAmount" type="number" placeholder="Enter Amount">
+  <div class="form">
 
-    <input id="modalReceiver" type="text"
-           placeholder="Receiver Username / Mobile">
+    <input id="signupName" type="text" placeholder="Full name">
 
-    <button class="gold-btn" onclick="processTransaction()">
-      Continue
+    <input id="signupEmail" type="email" placeholder="Email address">
+
+    <input id="signupPassword" type="password" placeholder="Password">
+
+    <button class="btn gold" onclick="signup()">
+      Create Account
     </button>
 
   </div>
 
 </div>
+</div>
+
+
+<div class="toast" id="toast"></div>
 
 
 <script>
 
-let currentAction = "";
-let balance = 5000;
+/* MOBILE MENU */
+
+function toggleMenu(){
+
+  document.getElementById("nav")
+    .classList.toggle("mobile-open");
+
+}
 
 
-/* LOGIN */
+/* CALCULATOR */
+
+function calculate(){
+
+  let amount =
+    Number(document.getElementById("amount").value) || 0;
+
+  let rate =
+    Number(document.getElementById("rate").value) || 0;
+
+  let total = amount * rate;
+
+  document.getElementById("result").innerText =
+    "₹" + total.toLocaleString("en-IN",{
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+
+}
+
+calculate();
+
+
+/* MODALS */
+
+function openLogin(){
+
+  document.getElementById("loginModal")
+    .classList.add("active");
+
+}
+
+function openSignup(){
+
+  document.getElementById("signupModal")
+    .classList.add("active");
+
+}
+
+function closeModals(){
+
+  document.getElementById("loginModal")
+    .classList.remove("active");
+
+  document.getElementById("signupModal")
+    .classList.remove("active");
+
+}
+
+
+/* DEMO SIGNUP */
+
+function signup(){
+
+  let name =
+    document.getElementById("signupName").value.trim();
+
+  let email =
+    document.getElementById("signupEmail").value.trim();
+
+  let password =
+    document.getElementById("signupPassword").value;
+
+  if(!name || !email || !password){
+
+    showToast("Please fill all fields");
+
+    return;
+  }
+
+  localStorage.setItem(
+    "goldpay_user",
+    JSON.stringify({
+      name:name,
+      email:email
+    })
+  );
+
+  closeModals();
+
+  showToast("GoldPay account created");
+
+}
+
+
+/* DEMO LOGIN */
 
 function login(){
 
-  let email = document.getElementById("loginEmail").value;
-  let password = document.getElementById("loginPassword").value;
+  let email =
+    document.getElementById("loginEmail").value.trim();
 
-  if(email === "" || password === ""){
-    alert("Please enter username and password.");
+  let password =
+    document.getElementById("loginPassword").value;
+
+  if(!email || !password){
+
+    showToast("Enter email and password");
+
     return;
   }
 
-  document.getElementById("auth").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
+  let user =
+    JSON.parse(localStorage.getItem("goldpay_user"));
 
-  document.getElementById("userName").innerText = email;
-  document.getElementById("profileName").innerText = email;
-  document.getElementById("profileEmail").innerText = email;
-}
+  if(user && user.email === email){
 
+    closeModals();
 
-/* REGISTER */
-
-function register(){
-
-  let name = document.getElementById("regName").value;
-  let email = document.getElementById("regEmail").value;
-  let password = document.getElementById("regPassword").value;
-
-  if(name === "" || email === "" || password === ""){
-    alert("Please fill all fields.");
-    return;
-  }
-
-  alert("Account created successfully!");
-
-  document.getElementById("loginEmail").value = email;
-
-  showLogin();
-}
-
-
-/* SWITCH FORMS */
-
-function showRegister(){
-
-  document.getElementById("loginForm").classList.add("hidden");
-  document.getElementById("registerForm").classList.remove("hidden");
-
-}
-
-function showLogin(){
-
-  document.getElementById("registerForm").classList.add("hidden");
-  document.getElementById("loginForm").classList.remove("hidden");
-
-}
-
-
-/* LOGOUT */
-
-function logout(){
-
-  document.getElementById("app").classList.add("hidden");
-  document.getElementById("auth").classList.remove("hidden");
-
-}
-
-
-/* MODAL */
-
-function openModal(action){
-
-  currentAction = action;
-
-  document.getElementById("modalTitle").innerText = action;
-
-  document.getElementById("modal").classList.remove("hidden");
-
-}
-
-function closeModal(){
-
-  document.getElementById("modal").classList.add("hidden");
-
-}
-
-
-/* TRANSACTION */
-
-function processTransaction(){
-
-  let amount = Number(
-    document.getElementById("modalAmount").value
-  );
-
-  if(!amount || amount <= 0){
-    alert("Enter a valid amount.");
-    return;
-  }
-
-  if(currentAction === "Send Money"){
-
-    if(amount > balance){
-      alert("Insufficient balance.");
-      return;
-    }
-
-    balance -= amount;
-
-    addTransaction(
-      "💸",
-      "Money Sent",
-      "-₹" + amount,
-      "minus"
-    );
+    showToast("Login successful — Welcome " + user.name);
 
   }else{
 
-    balance += amount;
-
-    addTransaction(
-      "📥",
-      currentAction,
-      "+₹" + amount,
-      "plus"
+    showToast(
+      "Demo account not found. Create an account first."
     );
 
   }
 
-  document.getElementById("balance").innerText =
-    balance.toLocaleString("en-IN",{
-      minimumFractionDigits:2
-    });
+}
 
-  document.getElementById("modalAmount").value = "";
 
-  document.getElementById("modalReceiver").value = "";
+/* TOAST */
 
-  closeModal();
+function showToast(message){
+
+  let toast =
+    document.getElementById("toast");
+
+  toast.innerText = message;
+
+  toast.classList.add("show");
+
+  setTimeout(function(){
+
+    toast.classList.remove("show");
+
+  },2500);
 
 }
 
 
-/* ADD HISTORY */
+/* CLOSE MODAL WHEN CLICKING OUTSIDE */
 
-function addTransaction(icon,title,amount,className){
+window.onclick = function(event){
 
-  let history =
-    document.getElementById("transactions");
+  if(event.target.classList.contains("modal")){
 
-  let div = document.createElement("div");
+    closeModals();
 
-  div.className = "transaction";
+  }
 
-  div.innerHTML = `
-
-    <div class="tx-left">
-
-      <div class="tx-icon">
-        ${icon}
-      </div>
-
-      <div>
-        <b>${title}</b>
-        <small>Just now</small>
-      </div>
-
-    </div>
-
-    <div class="${className}">
-      ${amount}
-    </div>
-
-  `;
-
-  history.prepend(div);
-
-}
-
-
-/* NAVIGATION */
-
-function scrollToHistory(){
-
-  document.querySelector(".section").scrollIntoView({
-    behavior:"smooth"
-  });
-
-}
-
-function scrollToProfile(){
-
-  let sections = document.querySelectorAll(".section");
-
-  sections[1].scrollIntoView({
-    behavior:"smooth"
-  });
-
-}
+};
 
 </script>
 
 </body>
-  </html>
+</html>
